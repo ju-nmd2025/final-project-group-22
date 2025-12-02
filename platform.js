@@ -13,6 +13,8 @@ function setup() {
 
 function draw() {
   background(135, 206, 235); // himmel
+  fill(0, 100, 0); // gräs
+  rect(0, 450, 400, 200);
 
   updatePlatforms(2); 
   drawPlatforms();
@@ -48,13 +50,13 @@ function drawPlatforms() {
 }
 
 // Oändlig scroll – återanvänd stegar
-function updatePlatforms(speed) {
+function updatePlatforms() {
   for (let p of platforms) {
-    p.y += speed;
-
-    if (p.y > height) {
-      p.y = -platformHeight;
-      p.x = random(0, width - platformWidth);
+    if (p.y > height + 50) {
+        p.y = random(-100, -20);
+        p.x = random(0, width - platformWidth);
+    } 
     }
-  }
 }
+
+
