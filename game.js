@@ -8,13 +8,9 @@ function setup() {
 
 
 // Create platforms
-for (let i = 0; i < 6; i++) {
-    platforms.push(
-        new Platform(
-          Math.random() * (width - 60),
-          height - i * 100
-        )
-      );
+for (let i = 0; i < 12; i++) {
+    platforms.push(new Platform(Math.random() * (width - 60), height - i * 40)
+  );
 }
 
 // Create player
@@ -28,19 +24,30 @@ player = {
 }
 
 function draw() {
-    background(100);
+    background(135, 206, 235); // Sky blue 
 
-    // --- Gravitation ---
-  player.vy += 0.6;
-  player.y += player.vy;
+// Gravitation
+    player.vy += 0.6;
+    player.y += player.vy;
 
-  // --- Rita spelare ---
+// Världen scrollas
+    let scrollSpeed = 0;
+    if (player.y < height / 2 && player.vy < 0) {
+    scrollSpeed = 4; //flyttar plattformarna neråt
+    }
+
+    for (let p of platforms) {
+    p.y += scrollSpeed;
+    }
+
+
+// Rita spelare
   rect(player.x, player.y, player.w, player.h);
 
-  // --- Plattformar ---
+// Plattformar
   generatePlatforms(platforms, player.y, width, height);
 
-  // --- Kollision med plattformar ---
+// Kollision med plattformar
   for (let p of platforms) {
     if (
       player.vy > 0 &&
@@ -49,17 +56,17 @@ function draw() {
       player.y + player.h > p.y &&
       player.y + player.h < p.y + p.h
     ) {
-      player.vy = -12; // Hopp
+      player.vy = -12; // Hopp uppåt
     }
-  }
+  } 
 
-  // --- Om spelaren faller ner ---
+  // Om spelaren faller ner
   if (player.y > height) {
     player.y = height - 100;
     player.vy = 0;
   }
 
-  // --- Sidrörelse ---
+// Sidrörelse
   if (keyIsDown(LEFT_ARROW)) player.x -= 5;
   if (keyIsDown(RIGHT_ARROW)) player.x += 5;
 }
