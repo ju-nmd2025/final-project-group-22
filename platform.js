@@ -16,7 +16,7 @@ export default class Platform {
   }
 }
 
-export function generatePlatforms(
+function generatePlatforms(
   platforms,
   playerY,
   canvasWidth,

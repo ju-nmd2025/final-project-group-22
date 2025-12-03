@@ -6,11 +6,14 @@ let player;
 function setup() {
     createCanvas(400, 600);
 
-
 // Create platforms
 for (let i = 0; i < 12; i++) {
-    platforms.push(new Platform(Math.random() * (width - 60), height - i * 40)
-  );
+    platforms.push(
+        new Platform(
+          Math.random() * (width - 60),
+          height - i * 40
+        )
+      );
 }
 
 // Create player
@@ -25,20 +28,22 @@ player = {
 
 function draw() {
     background(135, 206, 235); // Sky blue 
+
 // Gravitation
     player.vy += 0.6;
     player.y += player.vy;
 
 // Världen scrollas
     let scrollSpeed = 0;
+// Bara scroll när spelaren rör sig uppåt
     if (player.y < height / 2 && player.vy < 0) {
     scrollSpeed = 4; //flyttar plattformarna neråt
     }
 
+// Alla plattformare flyttas med scrollspeed
     for (let p of platforms) {
     p.y += scrollSpeed;
     }
-
 
 // Rita spelare
   rect(player.x, player.y, player.w, player.h);
@@ -57,7 +62,7 @@ function draw() {
     ) {
       player.vy = -12; // Hopp uppåt
     }
-  } 
+  }
 
   // Om spelaren faller ner
   if (player.y > height) {
