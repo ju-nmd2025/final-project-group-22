@@ -16,16 +16,10 @@ export default class Platform {
   }
 }
 
-function generatePlatforms(
-  platforms,
-  playerY,
-  canvasWidth,
-  canvasHeight,
- ) {
+function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight){
   for (let i = platforms.length - 1; i >= 0; i--) {
     platforms[i].draw();
-    }
-
+  
 // Ta bort plattformar som förvinner nedåt
     if (platforms[i].y > canvasHeight) {
       platforms.splice(i, 1);
@@ -34,10 +28,10 @@ function generatePlatforms(
       const newX = Math.random() * (canvasWidth - 60);
       const newY = -10;
 
-      platforms.push(new platform(newX, newY));
+      platforms.push(new Platform(newX, newY));
     }
   }
-
+}
 
 export { generatePlatforms };
 
