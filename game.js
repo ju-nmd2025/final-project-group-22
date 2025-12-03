@@ -25,7 +25,6 @@ player = {
 
 function draw() {
     background(135, 206, 235); // Sky blue 
-
 // Gravitation
     player.vy += 0.6;
     player.y += player.vy;
