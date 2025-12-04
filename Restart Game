@@ -1,0 +1,5 @@
+function restartGame (){
+    x = 200;
+    y = 300; 
+    isGameOver = false;
+}
