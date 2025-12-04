@@ -34,19 +34,19 @@ function setup() {
   }
 
   function drawStartScreen() {
-    background("lightgrey");
+    background(135, 206, 235); // Sky blue
 
     if(mouseX > 150 && mouseX <235 && mouseY > 200 && mouseY <235){
-        fill(255, 0, 0);
+        fill(0, 0, 0);
         cursor(HAND);
     } else {
-        fill(0, 0, 255);
+        fill(231, 84, 128);
         cursor(ARROW);
     }
   
-    rect(150, 200, 85, 35, 5);
+    rect(150, 200, 105, 35, 5);
     fill("white");
-    text("Click Me", 155, 222);
+    text("Start game", 157, 222);
   }
 
 function drawGame() {

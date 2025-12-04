@@ -8,6 +8,7 @@ export default class Platform {
 
   draw() {
     rect(this.x, this.y, this.w, this.h);
+    fill(139, 69, 19); // Brown color
   }
 
 // scrollar ner när spelar är högt upp
