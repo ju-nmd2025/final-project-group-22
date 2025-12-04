@@ -1,15 +1,15 @@
 function drawCharacter(x, y) {
     fill(255, 204, 0);
-    circle(x, y, 300);
+    circle(x, y, 90);
     
     fill(80, 60, 40);
-    circle(x-50, y-35, 50);
+    circle(x-20, y-5, 25);
     
     fill(80, 60, 40);
-    circle(x+50, y-35, 50); 
+    circle(x+20, y-5, 25); 
     
     fill(80, 60, 40);
-    arc(x, y+30, 170, 140, 0, PI);
+    arc(x, y+20, 50, 30, 0, PI);
 }
 
 let x = 200;
