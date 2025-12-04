@@ -32,7 +32,7 @@ function setup() {
       drawGame();
     }
   }
-   
+
   function drawStartScreen() {
     background(135, 206, 235); // Sky blue
 
