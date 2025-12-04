@@ -1,3 +1,7 @@
+let x = 200;
+let y = 300;
+let isGameOver = false;
+
 function restartGame (){
     x = 200;
     y = 300; 
