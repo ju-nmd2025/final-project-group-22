@@ -1,62 +1,41 @@
-let platforms = [];
+export default class Platform {
+  constructor(x, y, w = 60, h = 10) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
 
-let platformCount = 8;
-let platformWidth = 70;
-let platformHeight = 15;
-let minGap = 60;
-let maxGap = 110;
+  draw() {
+    rect(this.x, this.y, this.w, this.h);
+    fill(139, 69, 19); // Brown color
+  }
 
-function setup() {
-  createCanvas(400, 600);
-  createPlatforms();
-}
-
-function draw() {
-  background(135, 206, 235); // himmel
-  fill(0, 100, 0); // gräs
-  rect(0, 450, 400, 200);
-
-  updatePlatforms(2); 
-  drawPlatforms();
-}
-
-// Skapar stegar med bra slump-avstånd
-function createPlatforms() {
-  let y = height;
-
-  for (let i = 0; i < platformCount; i++) {
-    let gap = random(minGap, maxGap);
-    y -= gap;
-
-    let x = random(0, width - platformWidth);
-
-    platforms.push({
-      x: x,
-      y: y,
-      w: platformWidth,
-      h: platformHeight
-    });
+// scrollar ner när spelar är högt upp
+  scroll(speed) {
+    this.y += speed;
   }
 }
 
-// Ritar stegar
-function drawPlatforms() {
-  fill(139, 69, 19); // brun färg
-  noStroke();
+function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight){
+  for (let i = platforms.length - 1; i >= 0; i--) {
+    platforms[i].draw();
+  
+// Ta bort plattformar som förvinner nedåt
+    if (platforms[i].y > canvasHeight) {
+      platforms.splice(i, 1);
 
-  for (let p of platforms) {
-    rect(p.x, p.y, p.w, p.h);
-  }
-}
+// Skapa ny plattform längst upp
+      const newX = Math.random() * (canvasWidth - 60);
+      const newY = -10;
 
-// Oändlig scroll – återanvänd stegar
-function updatePlatforms() {
-  for (let p of platforms) {
-    if (p.y > height + 50) {
-        p.y = random(-100, -20);
-        p.x = random(0, width - platformWidth);
-    } 
+      platforms.push(new Platform(newX, newY));
     }
+  }
 }
+
+export { generatePlatforms };
+
+    
 
 

@@ -1,10 +1,11 @@
-import { character } from "./character.js";
-import platform from "platform";
+import Platform, { generatePlatforms } from "./platform.js";
+
+let gameState = "start";
+let platforms = [];
+let player;
 
 function setup() {
     createCanvas(400, 600);
-<<<<<<< Updated upstream
-=======
     textSize(18);
     textStyle(BOLD);
 
@@ -31,7 +32,7 @@ function setup() {
       drawGame();
     }
   }
-   
+
   function drawStartScreen() {
     background(135, 206, 235); // Sky blue
 
@@ -86,9 +87,18 @@ function drawGame() {
 
   if (keyIsDown(LEFT_ARROW)) player.x -= 5;
   if (keyIsDown(RIGHT_ARROW)) player.x += 5;
->>>>>>> Stashed changes
 }
 
-if(character.y + character.h < 450) {
-    character.y += 10;
+function mouseClicked() {
+  if (
+    gameState === "start" &&
+    mouseX > 150 &&
+    mouseX < 235 &&
+    mouseY > 200 &&
+    mouseY < 235
+  ) {
+    console.log("Button clicked!");
+    gameState = "play";
+    cursor(ARROW);
+  }
 }
