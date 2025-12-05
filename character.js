@@ -1,5 +1,3 @@
-export { character } from "./character.js);"
-
 function drawCharacter(x, y) {
     fill(255, 204, 0);
     circle(x, y, 90);
@@ -22,7 +20,7 @@ function setup (){
 function drawEmoji (x, y){
  fill (255, 255, 90);
 stroke (1);
-strokeWeight (5);
+strokeWeight (1);
 ellipse (x, y, 50, 50);
 
 fill ("white");
