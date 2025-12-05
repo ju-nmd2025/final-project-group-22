@@ -1,3 +1,5 @@
+export { character } from "./character.js);"
+
 function drawCharacter(x, y) {
     fill(255, 204, 0);
     circle(x, y, 90);
