@@ -1,4 +1,5 @@
 import Platform, { generatePlatforms } from "./platform.js";
+import { drawCharacter } from "./character.js";
 
 let gameState = "start";
 let platforms = [];
@@ -15,12 +16,10 @@ function setup() {
       );
     }
 
-  // create player
+  // player
      player = {
       x: width / 2,
       y: height - 100,
-      w: 30,
-      h: 30,
       vy: 0
      };
   }
@@ -64,17 +63,17 @@ function drawGame() {
     p.y += scrollSpeed;
   }
 
-  rect(player.x, player.y, player.w, player.h);
+  drawCharacter(player.x, player.y);
 
   generatePlatforms(platforms, player.y, width, height);
 
   for (let p of platforms) {
     if (
       player.vy > 0 &&
-      player.x + player.w > p.x &&
-      player.x < p.x + p.w &&
-      player.y + player.h > p.y &&
-      player.y + player.h < p.y + p.h
+      player.x + 25 > p.x &&
+      player.x - 25 < p.x + p.w &&
+      player.y + 25 > p.y &&
+      player.y + 25 < p.y + p.h
     ) {
       player.vy = -12;
     }
