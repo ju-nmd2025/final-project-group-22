@@ -1,7 +1,15 @@
 import Platform, { generatePlatforms } from "./platform.js";
 import { drawCharacter } from "./character.js";
 
-let gameState = "start";
+let gameState = {
+  current: "start",
+  states: {
+    start: "start",
+    play: "play",
+    death: "death"
+  }
+};
+
 let platforms = [];
 let player;
 
@@ -25,13 +33,26 @@ function setup() {
   }
 
   function draw() {
-    if (gameState === "start") {
-      drawStartScreen();
-    } else if (gameState === "play") {
-      drawGame();
+    switch (gameState.current) {
+
+      case gameState.states.start:
+        drawStartScreen();
+        break;
+
+      case gameState.states.play:
+        drawGame();
+        break;
+
+      case gameState.states.death:
+      drawDeathScreen();
+      break;
+
+      default:
+        console.error("Invalig game state");
     }
   }
 
+// Start screen
   function drawStartScreen() {
     background(135, 206, 235); // Sky blue
 
@@ -48,6 +69,7 @@ function setup() {
     text("Start game", 157, 222);
   }
 
+  // Game
 function drawGame() {
   background(135, 206, 235); // Sky blue
 
@@ -79,6 +101,7 @@ function drawGame() {
     }
   }
 
+  // deatch condition
   if (player.y > height) {
     player.y = height - 150;
     player.vy = 0;
@@ -88,36 +111,45 @@ function drawGame() {
   if (keyIsDown(RIGHT_ARROW)) player.x += 5;
 }
 
+// death screen
+function drawDeathScreen() {
+  background(0);
+  fill(255);
+  textAlign(CENTER);
+  textSize(32);
+  text("Game Over", width / 2, height / 2);
+
+  textSize(18);
+  text("Click to restart", width / 2, height / 2 + 40)
+  }
+
 // Start game
 function mouseClicked() {
   if (
-    gameState === "start" &&
+    gameState.current === gameState.states.start &&
     mouseX > 150 &&
     mouseX < 235 &&
     mouseY > 200 &&
     mouseY < 235
   ) {
-    console.log("Button clicked!");
-    gameState = "play";
-    cursor(ARROW);
+    gameState.current = gameState.states.play;
+    return;
   }
 
-
-  function showGameOver () {
-   fill(0, 0, 0, 180);
-   rect(0, 0, 400, 600);
-   fill(255);
-   textSize(35);
-   textAlign (CENTER);
-   text("GAME OVER", 200, 260);
-
-   textSize(15);
-   text("Tryck på R för att spela igen!", 200, 320);
+  // restart after death
+  if (gameState.current === gameState.states.death) {
+    restartGame();
+    gameState.current = gameState.states.play;
   }
+}
 
+function restartGame() {
+  player.x = width / 2;
+  player.y = height - 100;
+  player.vy = 0;
 
-  function restartGame() {
-    isGameOver = false;
-    createPlatforms();
+  platforms = [];
+  for (let i = 0; i < 12; i++) {
+    platforms.push(new Platform(Math.random() * (width - 60), height - i * 40));
   }
 }
