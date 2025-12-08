@@ -6,6 +6,8 @@ export default class Platform {
     this.h = h;
   }
 
+
+  
   draw() {
     rect(this.x, this.y, this.w, this.h);
     fill(139, 69, 19); // Brown color
@@ -33,6 +35,14 @@ function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight){
     }
   }
 }
+
+Platform.prototype.vx = 2;
+Platform.prototype.update = function() {
+  this.x += this.vx;
+  if (this.x <= 0 || this.x + this.w > 400) {
+    this.vx *= -1;
+  }
+};
 
 export { generatePlatforms };
 
