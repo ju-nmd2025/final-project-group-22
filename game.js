@@ -103,8 +103,7 @@ function drawGame() {
 
   // deatch condition
   if (player.y > height) {
-    player.y = height - 150;
-    player.vy = 0;
+    gameState.current = gameState.states.death;
   }
 
   if (keyIsDown(LEFT_ARROW)) player.x -= 5;
@@ -120,7 +119,7 @@ function drawDeathScreen() {
   text("Game Over", width / 2, height / 2);
 
   textSize(18);
-  text("Click to restart", width / 2, height / 2 + 40)
+  text("Click to restart", width / 2, height / 2 + 40);
   }
 
 // Start game
