@@ -70,17 +70,17 @@ function drawGame() {
   for (let p of platforms) {
     if (
       player.vy > 0 &&
-      player.x + 25 > p.x &&
-      player.x - 25 < p.x + p.w &&
-      player.y + 25 > p.y &&
-      player.y + 25 < p.y + p.h
+      player.x + 30 > p.x &&
+      player.x - 30 < p.x + p.w &&
+      player.y + 30 > p.y &&
+      player.y + 30 < p.y + p.h
     ) {
       player.vy = -12;
     }
   }
 
   if (player.y > height) {
-    player.y = height - 100;
+    player.y = height - 150;
     player.vy = 0;
   }
 
@@ -88,6 +88,7 @@ function drawGame() {
   if (keyIsDown(RIGHT_ARROW)) player.x += 5;
 }
 
+// Start game
 function mouseClicked() {
   if (
     gameState === "start" &&
