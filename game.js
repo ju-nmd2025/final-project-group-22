@@ -83,6 +83,8 @@ function drawGame() {
 
   for (let p of platforms) {
     p.y += scrollSpeed;
+    p.update();
+    p.draw();
   }
 
   drawCharacter(player.x, player.y);
