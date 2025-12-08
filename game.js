@@ -78,7 +78,7 @@ function drawGame() {
 
   let scrollSpeed = 0;
   if (player.y < height / 2 && player.vy < 0) {
-    scrollSpeed = 4;
+    scrollSpeed = 10;
   }
 
   for (let p of platforms) {
