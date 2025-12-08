@@ -5,9 +5,11 @@ export function Character(x, y) {
 
 // bird
 function drawCharacter(x, y) {
+  push()
   drawCharacterHead(x, y);
   drawCharacterEyes(x, y);
   drawCharacterMouth(x, y);
+  pop();
 }
 
 function drawCharacterHead(x, y) {
@@ -31,9 +33,11 @@ function drawCharacterEyes(x, y) {
 }
 
 function drawCharacterMouth(x, y) {
+  push();
   fill("orange");
   ellipse(x + 20, y + 10, 20, 10);
 
   fill("red");
   ellipse(x + 20, y + 10, 20, 1);
+  pop();
 }
