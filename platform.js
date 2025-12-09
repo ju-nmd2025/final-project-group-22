@@ -18,6 +18,7 @@ export default class Platform {
       }
     }
   }
+
   draw() {
     fill(139, 69, 19); // Brown color
     rect(this.x, this.y, this.w, this.h);
@@ -32,15 +33,14 @@ export function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight)
   }
 
 // Skapa ny plattform längst upp
-    if (platforms.length === 0 || platforms[0].y > 0) {
+    if (platforms.length === 0 || platforms[0].y > 60) {
 
       let num = Math.random();
       let newX = Math.random() * (canvasWidth - 60);
       let newY = -20;
 
-      if (num >= 0.9) {
-        let newPlatform = new Platform(newX, newY);
-        platforms.unshift(newPlatform);
+      if (num >= 0.3) {
+        platforms.unshift(new Platform(newX, newY));
       } else {
         let newPlatform = new Platform(newX, newY);
         newPlatform.vx = 2;
@@ -48,8 +48,3 @@ export function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight)
       }
     }
   }
-
-
-    
-
-
