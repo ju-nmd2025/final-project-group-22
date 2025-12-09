@@ -4,47 +4,51 @@ export default class Platform {
     this.y = y;
     this.w = w;
     this.h = h;
+
+    this.vx = 0 // Horizontal velocity
   }
-
-
   
-  draw() {
-    rect(this.x, this.y, this.w, this.h);
-    fill(139, 69, 19); // Brown color
-  }
-
-// scrollar ner när spelar är högt upp
-  scroll(speed) {
-    this.y += speed;
-  }
-}
-
-function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight){
-  for (let i = platforms.length - 1; i >= 0; i--) {
-    platforms[i].draw();
-  
-// Ta bort plattformar som förvinner nedåt
-    if (platforms[i].y > canvasHeight) {
-      platforms.splice(i, 1);
-
-// Skapa ny plattform längst upp
-      const newX = Math.random() * (canvasWidth - 60);
-      const newY = -10;
-
-      platforms.push(new Platform(newX, newY));
+  update() {
+    //Platforms moving horizontally
+    if (this.vx !== 0) {
+      this.x += this.vx;
+      // Bounce off walls
+      if (this.x < 0 || this.x + this.w > width) {
+        this.vx *= -1;
+      }
     }
   }
+  draw() {
+    fill(139, 69, 19); // Brown color
+    rect(this.x, this.y, this.w, this.h);
+  }
 }
 
-Platform.prototype.vx = 2;
-Platform.prototype.update = function() {
-  this.x += this.vx;
-  if (this.x <= 0 || this.x + this.w > 400) {
-    this.vx *= -1;
+export function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight){
+  for (let i = platforms.length - 1; i >= 0; i--) {
+    if (platforms[i].y > canvasHeight) {
+      platforms.splice(i, 1);
+    }
   }
-};
 
-export { generatePlatforms };
+// Skapa ny plattform längst upp
+    if (platforms.length === 0 || platforms[0].y > 0) {
+
+      let num = Math.random();
+      let newX = Math.random() * (canvasWidth - 60);
+      let newY = -20;
+
+      if (num >= 0.9) {
+        let newPlatform = new Platform(newX, newY);
+        platforms.unshift(newPlatform);
+      } else {
+        let newPlatform = new Platform(newX, newY);
+        newPlatform.vx = 2;
+        platforms.unshift(newPlatform);
+      }
+    }
+  }
+
 
     
 
