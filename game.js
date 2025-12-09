@@ -48,7 +48,7 @@ function setup() {
       break;
 
       default:
-        console.error("Invalig game state");
+        console.error("Invalid game state");
     }
   }
 
@@ -78,7 +78,7 @@ function drawGame() {
 
   let scrollSpeed = 0;
   if (player.y < height / 2 && player.vy < 0) {
-    scrollSpeed = 10;
+    scrollSpeed = 8;
   }
 
   for (let p of platforms) {
@@ -94,10 +94,11 @@ function drawGame() {
   for (let p of platforms) {
     if (
       player.vy > 0 &&
+      player.y + 30 <= p.y &&
+      player.y + 30 >= p.y - player.vy &&
       player.x + 30 > p.x &&
-      player.x - 30 < p.x + p.w &&
-      player.y + 30 > p.y &&
-      player.y + 30 < p.y + p.h
+      player.x - 30 < p.x + p.w
+
     ) {
       player.vy = -12;
     }
@@ -129,7 +130,7 @@ function mouseClicked() {
   if (
     gameState.current === gameState.states.start &&
     mouseX > 150 &&
-    mouseX < 235 &&
+    mouseX < 255 &&
     mouseY > 200 &&
     mouseY < 235
   ) {
@@ -146,7 +147,7 @@ function mouseClicked() {
 
 function restartGame() {
   player.x = width / 2;
-  player.y = height - 100;
+  player.y = height - 150; // starting a bit higher
   player.vy = 0;
 
   platforms = [];
