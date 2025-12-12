@@ -20,8 +20,12 @@ function setup() {
 
     // create platforms
     for (let i = 0; i < 12; i++) {
-      platforms.push(new Platform(Math.random() * (width - 60), height - i * 40)
-      );
+      let p = new Platform(Math.random() * (width - 60), height - i * 40);
+
+      if (i === 5) {
+        p.breakable = true; //the breaking platform
+      }
+      platforms.push(p);
     }
 
   // player
@@ -56,6 +60,7 @@ function setup() {
   function drawStartScreen() {
     background(135, 206, 235); // Sky blue
 
+    // start button
     if(mouseX > 150 && mouseX <235 && mouseY > 200 && mouseY <235){
         fill(0, 0, 0);
         cursor(HAND);
@@ -63,7 +68,7 @@ function setup() {
         fill(231, 84, 128);
         cursor(ARROW);
     }
-  
+
     rect(150, 200, 105, 35, 5);
     fill("white");
     text("Start game", 157, 222);
@@ -86,32 +91,44 @@ function drawGame() {
     p.update();
     p.draw();
   }
-
+  
   drawCharacter(player.x, player.y);
 
   generatePlatforms(platforms, player.y, width, height);
 
+// collisions
   for (let p of platforms) {
     if (
+      !p.broken &&
       player.vy > 0 &&
       player.y + 30 <= p.y &&
       player.y + 30 >= p.y - player.vy &&
       player.x + 30 > p.x &&
       player.x - 30 < p.x + p.w
-
     ) {
-      player.vy = -12;
+      if (p.breakable) {
+        if (!p.steppedOn) { //first time, normal jump
+          player.vy = -12;
+          p.steppedOn = true; //mark its used
+      } else {
+        // the second jump it breaks
+        p.broken = true;
+      }
+    } else {
+      player.vy = -12; //normal platform
     }
   }
+} 
 
-  // deatch condition
+  // death condition
   if (player.y > height) {
     gameState.current = gameState.states.death;
   }
 
-  if (keyIsDown(LEFT_ARROW)) player.x -= 5;
-  if (keyIsDown(RIGHT_ARROW)) player.x += 5;
+   if (keyIsDown(LEFT_ARROW)) player.x -= 5;
+   if (keyIsDown(RIGHT_ARROW)) player.x += 5;
 }
+
 
 // death screen
 function drawDeathScreen() {
@@ -152,6 +169,12 @@ function restartGame() {
 
   platforms = [];
   for (let i = 0; i < 12; i++) {
-    platforms.push(new Platform(Math.random() * (width - 60), height - i * 40));
+    let p = new Platform(Math.random() * (width - 60), height - i * 40);
+
+    if (i === 4) {
+      p.breakable = true;
+    }
+
+    platforms.push(p);
   }
 }
