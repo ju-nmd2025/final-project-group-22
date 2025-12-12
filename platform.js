@@ -5,10 +5,21 @@ export default class Platform {
     this.w = w;
     this.h = h;
 
-    this.vx = 0 // Horizontal velocity
+    this.vx = 0; // Horizontal velocity
+
+    this.breakable = false; //if the platform should break
+    this.broken = false;    // becomes true after player jumps on it.
+    this.steppedOn = false; // player jumping once on platform
   }
   
+  
   update() {
+    // if broken, fall down and ignore movement logic
+    if (this.broken) {
+      this.y += 6; // the falling speed
+      return;
+    }
+
     //Platforms moving horizontally
     if (this.vx !== 0) {
       this.x += this.vx;
@@ -20,7 +31,14 @@ export default class Platform {
   }
 
   draw() {
-    fill(139, 69, 19); // Brown color
+    if (this.broken) return; // makes no broken platform drawn
+
+    if (this.breakable) {
+      fill(231, 84, 128); // pink - breakable platform
+    } else {
+      fill (139, 69, 19); // normal brown platform
+    }
+  
     rect(this.x, this.y, this.w, this.h);
   }
 }
