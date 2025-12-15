@@ -4,65 +4,36 @@ export default class Platform {
     this.y = y;
     this.w = w;
     this.h = h;
-
-    this.vx = 0; // Horizontal velocity
-
+    this.broken = false;
+    this.singleUse = false;
     this.breakable = false; //if the platform should break
-    this.broken = false;    // becomes true after player jumps on it.
     this.steppedOn = false; // player jumping once on platform
   }
-  
-  
-  update() {
-    // if broken, fall down and ignore movement logic
-    if (this.broken) {
-      this.y += 6; // the falling speed
-      return;
-    }
-
-    //Platforms moving horizontally
-    if (this.vx !== 0) {
-      this.x += this.vx;
-      // Bounce off walls
-      if (this.x < 0 || this.x + this.w > width) {
-        this.vx *= -1;
-      }
-    }
-  }
-
+    
   draw() {
-    if (this.broken) return; // makes no broken platform drawn
-
-    if (this.breakable) {
-      fill(231, 84, 128); // pink - breakable platform
-    } else {
-      fill (139, 69, 19); // normal brown platform
-    }
-  
-    rect(this.x, this.y, this.w, this.h);
+    fill(this.broken ? 150 : 100, 200, 100);
+    rect(this.x, this.y, this.w, this.h, 5);
   }
 }
 
+export function assignPlatformType(platform) {
+  // slump av platformar
+  let r = random();
+  if (r < 0.2) platform.singleUse = true;
+  else if (r < 0.4) platform.breakable = true;
+}
+
+// generera nya plattformar
 export function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight){
   for (let i = platforms.length - 1; i >= 0; i--) {
-    if (platforms[i].y > canvasHeight) {
+    if (platforms[i].y > playerY + canvasHeight) {
       platforms.splice(i, 1);
     }
   }
 
-// Skapa ny plattform längst upp
-    if (platforms.length === 0 || platforms[0].y > 60) {
-
-      let num = Math.random();
-      let newX = Math.random() * (canvasWidth - 60);
-      let newY = -20;
-
-      if (num >= 0.3) {
-        platforms.unshift(new Platform(newX, newY));
-      } else {
-        let newPlatform = new Platform(newX, newY);
-        newPlatform.vx = 2;
-        platforms.unshift(newPlatform);
-      }
-    }
+  while (platforms.length < 12) {
+    let p = new Platform(random(canvasWidth - 60), playerY - random(50, 100));
+    assignPlatformType(p);
+    platforms.push(p);
   }
+}
