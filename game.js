@@ -12,10 +12,11 @@ let gameState = "start";
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
 
+  // create the player
   player = new Character (canvasWidth / 2, canvasHeight - 100);
   player.ySpeed = 0;
 
-  //startplattformar
+  //starting platforms
   platforms = [];
   for (let i = 0; i < 10; i++) {
     let p = new Platform(random(canvasWidth - 60), canvasHeight - i * 60);
@@ -25,6 +26,8 @@ function setup() {
 
 
 function draw() {
+  background(200, 220, 255);
+
   // start screen
   if (gameState === "start") {
     drawStartScreen();
@@ -37,24 +40,21 @@ function draw() {
     return;
   }
 
-  background(200, 220, 255);
-
-  // karaktärens logik
+  // the characters logic
   player.ySpeed += gravity;
   player.y += player.ySpeed; 
 
   if (keyIsDown(LEFT_ARROW)) player.x -= 5;
   if (keyIsDown(RIGHT_ARROW)) player.x += 5;
 
-  // håller karaktären inom Canvas
+  // keep the character inside the canvas
   if (player.x < 0) player.x = canvasWidth;
   if (player.x > canvasWidth) player.x = 0;
 
-  // Världen scrollas med spelaren
+  // the world scrolling
   if (player.y < canvasHeight / 2) {
     let diff = canvasHeight / 2 - player.y;
     player.y = canvasHeight / 2;
-
     for (let p of platforms) {
       p.y += diff;
     }
@@ -73,7 +73,7 @@ function draw() {
       !p.steppedOn
     ) {
       if (p.breakable) {
-        if (!p.SteppedOn) {
+        if (!p.steppedOn) {
           player.ySpeed = jumpStrength;
           p.steppedOn = true;
         } else {
@@ -83,24 +83,22 @@ function draw() {
         player.ySpeed = jumpStrength;
       }
     }
-    player.draw();
   }
 
-  // nya plattformar
-generatePlatforms(platforms, player.y, canvasWidth, canvasHeight / 2);
-
-// create the player
+// drawing the player
 player.draw();
 
-// Game Over
+// generating new platforms
+generatePlatforms(platforms, player.y, canvasWidth, canvasHeight);
+
+// game over
   if (player.y > canvasHeight + 50) {
     gameState = "death";
   }
 }
 
-
+// "click here to restart"
 function mouseClicked() {
-  // start game
 if (
     gameState === "start" &&
     mouseX > 150 &&
@@ -109,33 +107,29 @@ if (
     mouseY < 235
   ) {
     gameState = "play";
-    cursor(ARROW);
-  }
-
-  // restart game
-  else if (gameState === "death") {
+  } else if (gameState === "death") {
     setup();
     gameState = "play";
   }
-} 
+}
 
-// Start screen
+// start screen
 function drawStartScreen() {
     background(135, 206, 235); // Sky blue
     fill(231, 84, 128);
     rect(150, 200, 105, 35, 5);
     fill(255);
     textAlign(CENTER, CENTER);
-    text("Start game", 157, 222);
+    text("Start game", 202, 218);
   }  
 
-  // death
+  // death screen
 function drawDeathScreen() {
     background(0);
     fill(255);
-    textAlign(CENTER);
+    textAlign(CENTER, CENTER);
     textSize(32);
-    text("Game Over", width / 2, height / 2);
+    text("Game Over", canvasWidth / 2, canvasHeight / 2);
     textSize(18);
-    text("Click to restart", width / 2, height / 2 + 40);
+    text("Click to restart", canvasWidth / 2, canvasHeight / 2 + 40);
   }
