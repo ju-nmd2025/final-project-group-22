@@ -1,43 +1,44 @@
-export function Character(x, y) {
+export class Character {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-}
+  }
 
-// bird
-function drawCharacter(x, y) {
-  push()
-  drawCharacterHead(x, y);
-  drawCharacterEyes(x, y);
-  drawCharacterMouth(x, y);
-  pop();
-}
+  draw() {
+    push();
+    this.drawHead();
+    this.drawEyes();
+    this.drawMouth();
+    pop();
+  }
 
-function drawCharacterHead(x, y) {
+drawHead() {
   fill(255, 255, 90);
-  stroke(1);
+  stroke(0);
   strokeWeight(1);
-  ellipse(x, y, 50, 50);
+  ellipse(this.x, this.y, 50, 50);
 }
 
-function drawCharacterEyes(x, y) {
+drawEyes() {
   // eyes
   fill("white");
-  ellipse(x + 10, y - 5, 20, 20);
+  ellipse(this.x + 10, this.y - 5, 20, 20);
   fill("black");
-  ellipse(x + 12, y - 5, 5, 5);
+  ellipse(this.x + 12, this.y - 5, 5, 5);
 
   //wings
   fill("white");
-  ellipse(x - 25, y + 5, 30, 20);
-  ellipse(x - 25, y - 5, 20, 10);
+  ellipse(this.x - 25, this.y + 5, 30, 20);
+  ellipse(this.x - 25, this.y - 5, 20, 10);
 }
 
-function drawCharacterMouth(x, y) {
+drawMouth() {
   push();
   fill("orange");
-  ellipse(x + 20, y + 10, 20, 10);
+  ellipse(this.x + 20, this.y + 10, 20, 10);
 
   fill("red");
-  ellipse(x + 20, y + 10, 20, 1);
+  ellipse(this.x + 20, this.y + 10, 20, 1);
   pop();
+ }
 }
