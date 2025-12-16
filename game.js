@@ -62,6 +62,7 @@ function draw() {
 
   // platforms + collison
   for (let p of platforms) {
+    p.update();
     p.draw();
 
     if (
@@ -69,21 +70,22 @@ function draw() {
       player.y + 25 <= p.y + p.h &&
       player.x + 25 >= p.x &&
       player.x - 25 <= p.x + p.w &&
-      player.ySpeed > 0 &&
-      !p.steppedOn
+      player.ySpeed > 0
     ) {
-      if (p.breakable) {
+      if (p.type === 'breakable') {
+        p.broken = true;
+        player.ySpeed = jumpStrength;
+      } else if (p.type === 'singleUse') {
         if (!p.steppedOn) {
           player.ySpeed = jumpStrength;
           p.steppedOn = true;
-        } else {
-          p.broken = true;
         }
       } else {
         player.ySpeed = jumpStrength;
       }
     }
   }
+} 
 
 // drawing the player
 player.draw();
@@ -95,7 +97,7 @@ generatePlatforms(platforms, player.y, canvasWidth, canvasHeight);
   if (player.y > canvasHeight + 50) {
     gameState = "death";
   }
-}
+
 
 // "click here to restart"
 function mouseClicked() {
@@ -133,3 +135,4 @@ function drawDeathScreen() {
     textSize(18);
     text("Click to restart", canvasWidth / 2, canvasHeight / 2 + 40);
   }
+
