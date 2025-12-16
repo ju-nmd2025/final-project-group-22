@@ -85,19 +85,18 @@ function draw() {
       }
     }
   }
-} 
-
-// drawing the player
-player.draw();
+  
+  // drawing the player
+  player.draw();
 
 // generating new platforms
-generatePlatforms(platforms, player.y, canvasWidth, canvasHeight);
+  generatePlatforms(platforms, player.y, canvasWidth, canvasHeight);
 
 // game over
   if (player.y > canvasHeight + 50) {
-    gameState = "death";
+  gameState = "death";
   }
-
+}
 
 // "click here to restart"
 function mouseClicked() {
@@ -135,4 +134,3 @@ function drawDeathScreen() {
     textSize(18);
     text("Click to restart", canvasWidth / 2, canvasHeight / 2 + 40);
   }
-
