@@ -1,11 +1,13 @@
 export default class Platform {
-  constructor(x, y, w = 60, h = 10, isMoving = false) {
+  constructor(x, y, w = 60, h = 10, isMoving = false, isDisappearing = false) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
 
     this.isMoving = isMoving;
+    this.isDisappearing = isDisappearing;
+
     this.xSpeed = 2;
     this.direction = 1; // 1: höger, -1: vänster
   }
@@ -23,9 +25,11 @@ export default class Platform {
   draw() {
     push();
     if (this.isMoving) {
-      fill(255, 0, 255);
+      fill(200, 50, 100); // pink
+    } else if (this.isDisappearing) {
+      fill(255); // white
     } else {
-    fill(150, 75, 0); // brown
+    fill(150, 75, 0); // brown - normal platforms
     }
     noStroke();
     rect(this.x, this.y, this.w, this.h, 5);
@@ -47,15 +51,18 @@ export function generatePlatforms(platforms, playerY, canvasWidth, canvasHeight)
       if (p.y < highestY) highestY = p.y;
     }
   
-  let moving = Math.random() < 0.1;
+    let r = Math.random();
+    let moving = r < 0.1;
+    let disappearing = r > 0.1 && r < 0.2;
 
-  let newPlatform = new Platform(
-    Math.random() * (canvasWidth - 60),
-    highestY - (Math.random() * 40 + 60),
-    60,
-    10,
-    moving
-  );
-  platforms.push(newPlatform);
+    let newPlatform = new Platform(
+      Math.random() * (canvasWidth - 60),
+      highestY - (Math.random() * 40 + 60),
+      60,
+      10,
+      moving,
+      disappearing
+    );
+    platforms.push(newPlatform);
   }
 }
