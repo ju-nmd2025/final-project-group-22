@@ -12,38 +12,42 @@ export class Character {
   draw() {
     push();
     this.drawHead();
+    this.drawWings();
     this.drawEyes();
     this.drawMouth();
     pop();
   }
 
 drawHead() {
-  fill(255, 255, 90);
+  fill(255, 255, 90); // gul kropp
   stroke(0);
   strokeWeight(1);
   ellipse(this.x, this.y, 50, 50);
 }
 
-drawEyes() {
-  // eyes
+drawWings() {
   fill("white");
+  stroke(1);
+  ellipse(this.x - 25, this.y + 5, 30, 20);
+  ellipse(this.x - 25, this.y -5, 20, 10);
+
+
+}
+drawEyes() {
+  fill("white");
+  stroke(0);
   ellipse(this.x + 10, this.y - 5, 20, 20);
   fill("black");
+  noStroke();
   ellipse(this.x + 12, this.y - 5, 5, 5);
-
-  //wings
-  fill("white");
-  ellipse(this.x - 25, this.y + 5, 30, 20);
-  ellipse(this.x - 25, this.y - 5, 20, 10);
 }
 
 drawMouth() {
-  push();
   fill("orange");
+  stroke(0);
   ellipse(this.x + 20, this.y + 10, 20, 10);
 
-  fill("red");
-  ellipse(this.x + 20, this.y + 10, 20, 1);
-  pop();
+  stroke("red");
+  line(this.x + 10, this.y + 10, this.x + 30, this.y + 10);
  }
 }
