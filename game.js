@@ -1,5 +1,5 @@
-import { Character } from "./character.js";
 import Platform, { generatePlatforms } from "./platform.js";
+import { Character } from "./character.js";
 
 let player;
 let platforms = [];
@@ -85,7 +85,7 @@ function draw() {
       }
     }
   }
-  
+
   // drawing the player
   player.draw();
 
