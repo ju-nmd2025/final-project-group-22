@@ -1,7 +1,12 @@
 export class Character {
-  constructor(x, y) {
+  constructor(x, y, w = 50, h = 50) {
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
+
+    this.ySpeed = 0;
+    this.xSpeed = 5;
   }
 
   draw() {
