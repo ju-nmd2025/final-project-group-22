@@ -18,7 +18,18 @@ function resetGame() {
   platforms = [];
   // skapa startplattformar
   for (let i = 0; i < 12; i++) {
-    platforms.push(new Platform(Math.random() * (width - 60), height - i * 50));
+    let r = Math.random();
+    let moving = r < 0.1;
+    let disappearing = r > 0.1 && r < 0.2;
+
+    platforms.push(new Platform(
+      Math.random() * (width - 60),
+      height - i * 50,
+      60,
+      10,
+      moving,
+      disappearing
+    ));
   }
 }
 
@@ -27,6 +38,8 @@ function draw() {
     drawStartScreen();
   } else if (gameState === "play") {
     drawGame();
+  } else if (gameState === "gameover") {
+    drawGameOver();
   }
 }
 
@@ -75,7 +88,9 @@ player.draw();
 generatePlatforms(platforms, player.y, width, height);
 
 // kollisionshantering
-for (let p of platforms) {
+for (let i = platforms.length - 1; i >= 0; i--) {
+  let p = platforms[i];
+
     if (
       player.ySpeed > 0 && 
       player.x + 30 > p.x &&
@@ -84,6 +99,10 @@ for (let p of platforms) {
       player.y + 30 < p.y + p.h
     ) {
       player.ySpeed = -12;
+
+      if (p.isDisappearing) {
+        platforms.splice(i, 1);
+      }
     }
   }
 
@@ -97,9 +116,31 @@ for (let p of platforms) {
 
   // game over logic
   if (player.y > height) {
-    gameState = "start";
+    gameState = "gameover";
     resetGame();
   }
+}
+
+function drawGameOver() {
+  background(0);
+
+  fill(0);
+  textAlign(CENTER);
+  textSize(32);
+  text("GAME OVER", width / 2, height / 2 - 50);
+
+  if (mouseX > 150 && mouseX < 255 && mouseY > 250 && mouseY < 285) {
+    fill(200, 50, 100);
+    cursor(HAND);
+  } else {
+    fill(231, 84, 128);
+    cursor(ARROW);
+  }
+  
+  rect(150, 250, 105, 35, 5);
+  fill("white");
+  textSize(18);
+  text("Restart", 202, 274);
 }
 
 // Start game
@@ -111,6 +152,9 @@ function mouseClicked() {
     mouseY > 200 &&
     mouseY < 235
   ) {
+    gameState = "play";
+  } else if (gameState === "gameover" && mouseX > 150 && mouseX < 255 && mouseY < 285) {
+    resetGame();
     gameState = "play";
   }
 }
