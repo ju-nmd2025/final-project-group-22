@@ -158,3 +158,16 @@ function mouseClicked() {
     gameState = "play";
   }
 }
+
+// The main game code above
+window.setup = setup;
+
+window.draw = draw;
+
+window.addEventListener("click", function (event) {
+    mousePressed();
+});
+
+window.addEventListener("keydown", function (event) {
+    keyPressed();
+});
