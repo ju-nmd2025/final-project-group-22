@@ -153,7 +153,7 @@ function mouseClicked() {
     mouseY < 235
   ) {
     gameState = "play";
-  } else if (gameState === "gameover" && mouseX > 150 && mouseX < 255 && mouseY < 285) {
+  } else if (gameState === "gameover" && mouseX > 150 && mouseX < 255 && mouseY > 250 && mouseY < 285) {
     resetGame();
     gameState = "play";
   }
@@ -164,10 +164,5 @@ window.setup = setup;
 
 window.draw = draw;
 
-window.addEventListener("click", function (event) {
-    mousePressed();
-});
+window.mouseClicked = mouseClicked;
 
-window.addEventListener("keydown", function (event) {
-    keyPressed();
-});
