@@ -1,5 +1,5 @@
 export class Character {
-  constructor(x, y, w = 50, h = 50) {
+  constructor(x, y, w = 60, h = 60) {
     this.x = x;
     this.y = y;
     this.w = w;
