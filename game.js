@@ -141,6 +141,9 @@ function drawGameOver() {
   fill("white");
   textSize(18);
   text("Restart", 202, 274);
+  fill("white");
+  textSize(24);
+  text("GAME OVER", 200, 200);
 }
 
 // Start game
